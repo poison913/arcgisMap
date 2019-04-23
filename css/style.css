@@ -1,0 +1,337 @@
+﻿/*location map styles xlm */
+.map-wrapper,
+.map {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0px;
+	bottom:0;
+}
+.map-wrapper {
+	top:0px;
+    right:320px;
+}
+	.map .container {
+		background:#fff;
+	}
+.maptype {
+	position:absolute;
+	top:0;
+	right:0px;
+	width:80px;
+	height:82px;
+	transition:0.3s;
+}
+.maptype-card {
+	position:absolute;
+    top:15px;
+	left:10px;
+	display:block;
+	width:60px;
+	height:60px;
+	background:url(../img/maptype.png);
+	border:1px solid #ccc;
+	cursor:pointer;
+	transition:0.3s;
+	color:#fff;
+}
+.maptype-card[data-name="satellite"] {
+	top:10px;
+	background-position:-60px 0;
+}
+	.maptype-card.maptype-below1 {
+		top:15px;
+		opacity:0.2;
+	}
+
+    .maptype:hover {
+	height: 154px;
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7fffffff',endColorstr='#7fffffff');
+    background-color:rgba(255, 255, 255, 0.75);
+}
+	.maptype:hover .maptype-card.maptype-below1 {
+		top:82px;
+		opacity:1;
+	}
+.maptype-card span {
+	display:block;
+	position:absolute;
+	top:0;
+	right:0;
+	padding:0 5px;
+	transition:0.3s;
+}
+.maptype-card:hover {
+	border-color: #2781CD;
+}
+	.maptype-card:hover span {
+		background:#2781CD;
+	}
+
+.map_legend {
+    position:absolute;
+    left:10px;
+    bottom:34px;
+}
+    .map_legend .panel {
+        float:left;
+        margin-right:5px;
+    }
+.legendlist {
+    padding:5px;
+    background: #34485E;
+    opacity: 0.9;
+}
+.legendlist > li {
+    line-height:24px;
+    padding:0 10px;
+    white-space:nowrap;
+}
+    .legendlist > li span {
+        white-space:nowrap;
+		vertical-align:middle;
+    }
+	.legendlist > li input[type="checkbox"] {
+		margin-right:10px;
+	}
+.legendlist .legend_rect {
+    display:inline-block;
+    *display:inline;
+    zoom:1;
+    width:14px;
+    height:10px;
+    vertical-align:middle;
+    margin-right:15px;
+    border-width:1px;
+    border-style:solid;
+}
+.legend_rect.red {
+    border-color:#ff0000;
+    background:#ff0000;
+}
+.legend_rect.green {
+    border-color:#00ff00;
+    background:#00ff00;
+}
+.legend_rect.blue {
+    border-color: #0000ff;
+    background:#0000ff;
+}
+.legend_rect.yellow {
+    border-color: #ffff00;
+    background:#ffff00;
+}
+#zuobiao{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    width: 170px;
+    height: 20px;
+    background-color: #7d6666;
+    z-index: 9999;
+}
+       html,body {
+        height:100%;
+        width:100%;
+        margin:0;
+      }
+      body {
+        background-color:#FFF;
+        overflow:hidden;
+        font-family:"Trebuchet MS";
+      }
+      #map {
+        border:solid 2px #808775;
+        -moz-border-radius:4px;
+        -webkit-border-radius:4px;
+        border-radius:4px;
+        margin:5px;
+        padding:0px;
+      }
+      #titlePan{
+        width:280px;
+      }#measurementDiv{
+        width:280px;
+      }
+     .calcite .esriMeasurement .dijitButtonNode {
+    width: 100%;
+}
+     
+element.style {
+}
+.calcite .esriMeasurement .dijitButtonNode {
+    width: 100%;
+}
+.calcite .dijitButtonNode, .calcite .dijitSliderDecrementIconH, .calcite .dijitSliderIncrementIconH, .calcite .dijitSliderDecrementIconV, .calcite .dijitSliderIncrementIconV {
+    touch-action: manipulation;
+    cursor: pointer;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    -moz-user-select: -moz-none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    color: #4c4c4c;
+    background-color: #fff;
+    -moz-transition: all .25s ease;
+    -o-transition: all .25s ease;
+    -webkit-transition: all .25s ease;
+    transition: all .25s ease;
+    border-color: #e0e0e0;
+}
+.esriButton .dijitButtonNode {
+    color: #666666 !important;
+    height: 30px;
+    width: 32px;
+    vertical-align: middle;
+    padding-top: 3px !important;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: medium !important;
+    border-color: none !important;
+    border: none !important;
+    background: none;
+}
+*, *:before, *:after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.calcite .esriMeasurement .dijitButtonNode * {
+    outline: none;
+}
+.calcite .esriMeasurement .areaIcon {
+    background-image: url(../images/Measure_Area16.png);
+}
+.calcite .esriMeasurement .distanceIcon, .calcite .esriMeasurement .areaIcon, .calcite .esriMeasurement .locationIcon {
+    width: 16px;
+    height: 16px;
+}
+.calcite .esriMeasurement .dijitButtonNode * {
+    outline: none;
+}
+.calcite .esriMeasurement{width:100%;height:100%;position:relative}.calcite .esriMeasurement .esriMeasurementBorderContainer{width:100%;height:100%;padding:0;margin:0}.calcite .esriMeasurement .dijitContentPane{padding:0;position:relative}.calcite .esriMeasurement .distanceIcon,.calcite .esriMeasurement .areaIcon,.calcite .esriMeasurement .locationIcon{width:16px;height:16px}.calcite .esriMeasurement .distanceIcon{background-image:url(../images/Measure_Distance16.png)}.calcite .esriMeasurement .areaIcon{background-image:url(../images/Measure_Area16.png)}.calcite .esriMeasurement .locationIcon{background-image:url(../images/Measure_Point16.png)}.calcite .esriMeasurement .esriButton{float:left;width:33.3333333333%;position:relative}.calcite .esriMeasurement .esriButton+.esriButton{margin-left:-1px}.calcite .esriMeasurement .esriButton:first-child{margin-left:1px}.calcite .esriMeasurement .dijitButtonNode{width:100%}.calcite .esriMeasurement .dijitButtonNode .dijitIcon{margin-right:0}.calcite .esriMeasurement .dijitButtonNode *{outline:none}.calcite .esriMeasurement .esriButtonChecked{z-index:1}.calcite .esriMeasurement .esriButtonChecked .dijitButtonNode{color:#0079c1;background-color:#aadbfa;border-color:#196fa6}.calcite .esriMeasurement .esriToggleButton{display:block;margin:0 1px}.calcite .esriMeasurement .esriToggleButton .dijitButtonContents{display:table;width:100%;padding:0}.calcite .esriMeasurement .esriToggleButton .dijitButtonContents>*{display:table-cell}.calcite .esriMeasurement .esriToggleButton .dijitButtonText{width:100%;padding:5px 10px}.calcite .esriMeasurement .esriToggleButton .dijitArrowButtonInner{float:right}.calcite .esriMeasurement .esriMeasurementButtonContainer{overflow:visible;margin-bottom:10px}.calcite .esriMeasurement .esriMeasurementResultLabel{border-top:1px solid #efefef;padding:10px 10px;color:#a9a9a9;text-align:center}.calcite .esriMeasurement .esriMeasurementResultValue,.calcite .esriMeasurement .esriMeasurementTableContainer{text-align:center;padding:10px 10px}.calcite .esriMeasurement .esriMeasurementResultTable{width:100%}.calcite .esriMeasurement .esriMeasurementTableRow,.calcite .esriMeasurement .result{font-weight:700;font-size:13px}.calcite .esriMeasurement .esriMeasurementTableHeader{width:50%;text-align:end}.calcite .esriMeasurement .esriMeasurementTableCell{width:48%;text-align:end}.calcite .esriMeasurement .esriMeasurementSeparator{height:10px;text-indent:-99999em;clear:both}.dj_rtl .calcite .esriMeasurement .esriButton{float:right}.dj_rtl .calcite .esriMeasurement .esriButton+.esriButton{margin-left:inherit;margin-right:-1px}.dj_rtl .calcite .esriMeasurement .esriButton:first-child{margin-left:inherit;margin-right:1px}.dj_rtl .calcite .esriMeasurement .dijitButtonNode .dijitIcon{margin-left:0;margin-right:inherit}.dj_rtl .calcite .esriMeasurement .esriToggleButton .dijitArrowButtonInner{float:left}
+
+/*自定义css*/
+#layers {
+    position: absolute;
+    left: 20px;
+    top: 150px;
+    background-image: url('../images/layers.png'); 
+    background-size: 100% 100%;
+    width: 32px;
+    height: 32px;
+    /*background-color: #686b6b;*/
+    z-index:9999999999
+}
+#query {
+    position: absolute;
+    left: 20px;
+    top: 200px;
+    background-image: url('../images/search .png'); 
+    background-size: 100% 100%;
+    width: 32px;
+    height: 32px;
+    /*background-color: #686b6b;*/
+    z-index:9999999999
+}
+#analytics {
+    position: absolute;
+    left: 20px;
+    top: 250px;
+    background-image: url('../images/1111.png'); 
+    background-size: 100% 100%;
+    width: 32px;
+    height: 32px;
+    /*background-color: #686b6b;*/
+    z-index: 9999999999;
+}
+#static {
+    position: absolute;
+    left: 20px;
+    top: 250px;
+    background-image: url('../images/static.png'); 
+    background-size: 100% 100%;
+    width: 32px;
+    height: 32px;
+    /*background-color: #686b6b;*/
+    z-index:9999999999;
+    display:none;
+}
+#print {
+    position: absolute;
+    left: 20px;
+    top: 300px;
+    background-image: url('../images/print.png'); 
+    background-size: 100% 100%;
+    width: 32px;
+    height: 32px;
+    /*background-color: #686b6b;*/
+    z-index: 9999999999;
+}
+#layerdiv{
+    position: absolute;
+    top: 20px;
+    left: 70px;
+    width: 290px;
+    height: 310px;
+}
+#querydiv{
+    position: absolute;
+    top: 100px;
+    right: 20px;
+    width: 400px;
+    height: 80%;
+}
+#analyticsdiv{
+    position: absolute;
+    top: 20px;
+    left: 70px;
+    width: 590px;
+    height: 100px;
+}
+#staticdiv{
+    position: absolute;
+    top: 200px;
+    left: 300px;
+    width: 760px;
+    height: 500px;
+}
+#layertree{
+    width: 100%;
+    height: 240px;
+}
+#prodetail{
+    position: absolute;
+    top: 100px;
+    left: 280px;
+    width: 580px;
+    height: 520px;
+}
+#proimgdiv{
+    position: absolute;
+    top: 250px;
+    left: 350px;
+    width: 560px;
+    height: 520px;
+    z-index:9999
+}
+/*.ui_title_bar {
+display: none !important;
+}*/
+#ex1Slider .slider-selection {
+    background: #4CAF50;
+    
+}
+#point {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 220px;
+    height: 50px;
+    background-color: antiquewhite;
+}
+ .modal.fade.in{
+        top:30%;  
+    }

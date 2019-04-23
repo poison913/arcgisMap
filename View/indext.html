@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="../css/style.css" rel="stylesheet" /> 
+    <link href="../css/tundra.css" rel="stylesheet" />
+    <link href="../css/esri.css" rel="stylesheet" />
+    <link href="../css/calcite.css" rel="stylesheet" />   
+    <link href="../js/zTree/zTreeStyle.css" rel="stylesheet" />
+    <!--<link href="https://js.arcgis.com/4.8/esri/css/main.css" rel="stylesheet" />-->
+    <link href="../css/arcgismain.css" rel="stylesheet" />
+    <!--<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">--> 
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../js/lhgdialog/skins/mac.css" rel="stylesheet" />
+    <link href="../css/pgwslideshow/default.css" rel="stylesheet" />
+    <link href="../css/pgwslideshow/normalize.css" rel="stylesheet" />
+    <link href="../css/pgwslideshow/pgwslideshow.css" rel="stylesheet" />
+    <link href="../css/bootstrap-table.min.css" rel="stylesheet" />
+    <link href="../css/bootstrap-slider.css" rel="stylesheet" /> 
+    <link href="../js/My97DatePicker/skin/WdatePicker.css" rel="stylesheet" /> 
+    <script src="../js/jquery-1.11.3.min.js"></script> 
+    <!--<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+    <script src="../js/bootstrap.min.js"></script> 
+    <script src="../js/bootstrap-slider.min.js"></script> 
+    <script src="../js/html2canvas.js"></script>
+    <script src="../js/common.js"></script> 
+    <!--<script src="../js/heatmap1/heatmap.js"></script>--> 
+    <script src="../js/heatmap3/heatmapdy.js"></script>
+    <script src="../js/ClusterLayer.js"></script>
+    <!--<script src="../js/heatmap/heatmap2.js"></script>-->
+    <script src="../js/jquery.cookie.js"></script>
+    <script src="../js/init.js"></script>
+    <script src="../js/tdt1.js"></script> 
+    <script src="../js/zTree/jquery.ztree.core.min.js"></script>
+    <script src="../js/zTree/jquery.ztree.excheck.min.js"></script>
+    <script src="../js/zTree/jquery.ztree.exedit.min.js"></script>
+    <script src="../js/pgwslideshow.min.js"></script>
+    <script src="../js/lhgdialog/lhgdialog.min.js"></script> 
+    <script src="../js/bootstrap-table.min.js"></script>
+    <script src="../js/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../js/Highcharts/highcharts.js"></script> 
+    <!--<script src="../js/heatmap1/heatmap-arcgis1.js"></script>-->  
+    <script src="../js/heatmap3/heatmap-arcgis1.js"></script>
+    <script src="../js/My97DatePicker/WdatePicker.js"></script>
+    <script src="../js/mapUtils.js"></script>
+    <style>
+        #HomeButton1111 {
+            display: block;
+            left: 20px;
+            top: 100px;
+            position: absolute;
+            z-index: 999999999999;
+        }
+        #html2canvs {
+                display: block;
+                left: 20px;
+                top: 350px;
+                position: absolute;
+                background-image: url(../dijit/images/locate.png);
+                width: 20px;
+                height: 20px;
+                background-color: gray;
+        }
+    </style>
+</head>
+<body class="calcite" id="calcite">
+    <div id="heatLayer"></div>
+    <div id="MyMapDiv" class="heatmap" > <!--class="map"--> 
+    </div> 
+    <div id="point"></div>
+    <div id="HomeButton1111" ></div>
+    <!--<div id="printButton"></div>-->
+    <div id="layers" title="图层控制"></div>
+    <div id="query" title="地图查询"></div>
+    <div id="analytics" title="空间分析"></div>
+    <div id="static" title="地图统计"></div> 
+    <div id="print" onclick="modelcanvasPrint()" title="地图打印"></div> 
+    <!--<div id="html2canvs" onclick="canvasPrint()"></div>-->
+    <!--<div class="maptype choosed">
+        <div class="maptype-card maptype-below1" data-name="normalMap"><span>交通</span></div>
+        <div class="maptype-card maptype-choosed" data-name="satellite"><span>卫星</span></div> 
+    </div>--> 
+    <div style="position:absolute; right:20px; top:20px; z-Index:999;background-color:white">
+        <div id="titlePane"  style="text-align: center;background-color: #f8f8f8;padding:10px;cursor:pointer"> 
+            量测工具
+        </div>
+        <div id="measurementDiv" style="display:none"></div>
+    </div>
+    <!--<div id="zuobiao">当前坐标</div>-->
+
+    <div class="panel panel-default" id="layerdiv" style="display:none">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                图层控制
+                <label id="down" style="float: right;">+</label>
+            </h3>
+        </div>
+        <div class="panel-body" id="layersbody" style="padding: 0px 0px 0px 10px;"> 
+            透明度：<input id="ex1" data-slider-id="ex1Slider" type="text"
+                   data-slider-min="0" data-slider-max="100" data-slider-step="1"
+                   data-slider-value="90" style="width: 170px;"/>
+            <ul id="layertree" class="ztree"></ul>
+        </div>
+    </div>
+    <div class="panel panel-default " id="querydiv" style="display:none">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                地图查询
+            </h3>
+        </div>
+        <div class="panel-body" style="height:90%;overflow-y:auto">
+            <!--项目列表（展示现有项目，添加，编辑）-->
+            <div class="form-inline" >
+                <div class="form-group" style="margin-right: 20px;margin-bottom: 10px;">
+                     <!--<label for="lastname" class="control-label" style="font-weight: 500;">项目名称</label>-->
+                    <input type="text" class="form-control" id="proname11" placeholder="请输入名称" style="width: 47%;float: left;">
+                    <input type="text" class="form-control" id="addr" placeholder="项目地址"  style="width: 47%;margin-left: 4%;">
+                </div>
+                <!--<div class="form-group" style="margin-right: 20px;margin-bottom: 10px;">
+                     <label class="control-label" for="name" style="font-weight: 500;">项目地址</label> 
+                     <input type="text" class="form-control" id="addr" placeholder="项目地址"> 
+                </div>-->
+                <div class="form-group" style="margin-right: 20px;margin-bottom: 10px;">
+                    <!--<label   for="name" style="font-weight: 500;">开始时间</label>-->
+                    <input type="text" id="start"  class="form-control"onfocus="WdatePicker({readOnly: true,dateFmt:'yyyy-MM-dd'})"  style="width: 47%;float: left;"  placeholder="开始时间"/>
+                    <input type="text" id="end" class="form-control" onfocus="WdatePicker({readOnly: true,dateFmt:'yyyy-MM-dd'})" style="width: 47%;margin-left: 4%;" placeholder="结束时间"/>
+                </div>
+                <!--<div class="form-group" style="margin-right: 20px;margin-bottom: 10px;">
+                    <label class="control-label" for="name" style="font-weight: 500;">结束时间</label>
+                    <input type="text" id="end"  class="form-control" onfocus="WdatePicker({readOnly: true,dateFmt:'yyyy-MM-dd'})" />
+                </div>-->
+                <button  class="btn btn-primary" onclick="pagedata()" style="float: right;" >查询</button>
+            </div>
+            <div>
+                <table id="table" class="table table-bordered table-hover active" cellspacing="0" cellpadding="0" 
+                style="width:100%;-moz-user-select: none; -webkit-user-select: none;-ms-user-select: none;-khtml-user-select: none;user-select: none;"></table>
+            </div>
+            
+        </div>
+    </div>
+    <div class="panel panel-default" id="analyticsdiv" style="display:none">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                空间分析工具条
+            </h3>
+        </div>
+        <div class="panel-body">
+            <button type="button" onclick="rangeanalytics()" class="btn btn-default">范围分析</button>
+            <button type="button" onclick="modelbufferclick()" class="btn btn-default">项目缓冲区</button>
+            <button type="button" onclick="modellinebufferclick()" class="btn btn-default">线段缓冲区</button>
+            <button type="button" onclick="heatmap3()" class="btn btn-default">密度分析</button>
+            <button type="button" onclick="clusterlayer()" class="btn btn-default">统计分析</button>
+            <button type="button" onclick="discover()" class="btn btn-default">发掘分析</button> 
+            <!--<button type="button" onclick="canvasPrint()" class="btn btn-default">打印</button>--> 
+        </div>
+    </div>
+    <div class="panel panel-default drag" id="staticdiv" style="display:none">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                统计分析
+            </h3>
+        </div>
+        <div class="panel-body">
+            <label class="control-label" style="width: 90px;float: left;font-weight: 350; margin-top: 5px;">统计方式：</label>
+            <select  class="form-control" style="width: 200px;" id='groupName' onchange="groupChange()">
+                <option selected value="schedule">项目状态</option>
+                <option value="area">考古区域</option>
+                <option value="period">所属年代</option>
+            </select>
+            <div id="chart1"></div>
+        </div>
+    </div>
+    <!--项目详情弹窗-->
+    <div class="panel panel-default drag1" id="prodetail" style="display:none">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                项目详情<span style="float: right;cursor:pointer" title="关闭" class="proclose">X</span>
+            </h3> 
+        </div> 
+        <div class="panel-body" id="pro">
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">
+                        <span style="color: red;font-size: 18px;vertical-align: middle;">*</span>
+                        项目名称:
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="projectname" disabled
+                               placeholder="项目名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">
+                        <span style="color: red;font-size: 18px;vertical-align: middle;">*</span>
+                        建设单位:
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="unit" disabled
+                               placeholder="建设单位">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">
+                        <span style="color: red;font-size: 18px;vertical-align: middle;">*</span>
+                        建设地点:
+                    </label>
+                    <div class="col-sm-3" style="padding-right: 0px;">
+                        <!--<select class="form-control">
+                            <option value="">请选择</option>
+                            <option value="saab">Saab</option>
+                            <option value="opel">Opel</option>
+                            <option value="audi">Audi</option>
+                        </select>-->
+                        <input type="text" class="form-control" id="areaName" disabled
+                               placeholder="建设单位">
+                    </div>
+                    <div class="col-sm-5" style="padding-left: 0px;">
+                        <input type="text" class="form-control" id="address" disabled
+                               placeholder="建设单位">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="col-sm-3 control-label">启动时间:</label>
+                    <div class="col-sm-8">
+                        <!--<input type="text" id="beginTime_Daily" class="form-control" onfocus="WdatePicker({readOnly: true,dateFmt:'yyyy-MM-dd'})" />-->
+                        <input type="text" class="form-control" id="startDate" disabled
+                               placeholder="建设单位">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">
+                        所属时代:
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="period" disabled
+                               placeholder="所属时代">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">
+                        协议签订负责人:
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="signuser" disabled
+                               placeholder="协议签订负责人">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">
+                        项目负责人:
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="chargeuser" disabled
+                               placeholder="项目负责人">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="userName" class="col-sm-3 control-label">
+                        项目成员:
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="member" disabled
+                               placeholder="项目成员">
+                    </div>
+                </div>
+                <div class="form-group">  
+                    <div id="action" style="width: 45%;float: left;"></div>
+                    <span onclick="showdiv()" style="border:1px solid #b8d8b8;padding: 5px; position: relative; color: #fff;background-color: #009688;cursor: pointer; font:inherit;">视频展示</span>
+                    <span onclick="showdiv1()" style="border:1px solid #b8d8b8;padding: 5px; position: relative; color: #fff;background-color: #009688;cursor: pointer; font:inherit;">VR展示按钮</span>
+                    <span id="showimg" style="border:1px solid #b8d8b8;padding: 5px; position: relative; color: #fff;background-color: #009688;cursor: pointer; font:inherit;">项目图片</span>
+                </div>
+            </form> 
+        </div>
+    </div>
+    <!--项目详情图片弹窗-->
+    <div class="panel panel-default drag" id="proimgdiv" style="display:none">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                图片<span style="float: right;cursor:pointer" title="关闭" class="proimgclose">X</span>
+            </h3>
+        </div>
+        <div class="panel-body">
+            <ul class="pgwSlideshow">
+                <li>
+                    <img src="../images/analytics.png" alt="没有图片" data-description="图便宜" />
+                </li>
+                <li>
+                    <img src="../images/analytics.png" alt="没有图片1" data-description="图便宜1" />
+                </li>
+                <li>
+                    <img src="../images/analytics.png" alt="没有图片2" data-description="图便宜2" />
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 模态框（选择添加项目范围方式） -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 400px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        选择添加项目范围方式
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <button type="button" class="btn btn-default" id="mapadd">手动添加</button>
+                    <button type="button" class="btn btn-default" id="txtadd">导入范围</button>
+                    <input type="file" value="导入范围" id="upload" style="display:none;" onclick="return fileUpload_onclick()" onchange="return fileUpload_onselect()" />
+                </div> 
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 模态框（项目缓冲区半径） -->
+    <div class="modal fade" id="bufferModal" tabindex="-1" role="dialog" aria-labelledby="bufferModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 400px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="bufferModalLabel">
+                        请输入缓冲区半径（单位为米）
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="bufferdistince" value="2000"> 
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="bufferclick()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 模态框（线段缓冲区半径） -->
+    <div class="modal fade" id="bufferModal1" tabindex="-1" role="dialog" aria-labelledby="bufferModalLabel1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 400px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="bufferModalLabel1">
+                        请输入缓冲区半径（单位为米）
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="linebufferdistince" value="2000">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="linebufferclick()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+    <!-- 模态框（线段缓冲区半径） -->
+    <div class="modal fade" id="printModal1" tabindex="-1" role="dialog" aria-labelledby="printModal1Label1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="width: 400px;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="printModal1Label1">
+                        请输入图名
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control" id="printname" placeholder="图名。。。">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="canvasPrint()">确定</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+</body> 
+</html>

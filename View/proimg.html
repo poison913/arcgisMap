@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="../css/style.css" rel="stylesheet" />
+    <link href="../css/tundra.css" rel="stylesheet" /> 
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="../css/pgwslideshow/default.css" rel="stylesheet" />
+    <link href="../css/pgwslideshow/normalize.css" rel="stylesheet" />
+    <link href="../css/pgwslideshow/pgwslideshow.css" rel="stylesheet" />
+    <script src="../js/jquery-1.11.3.min.js"></script> 
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+    <script src="../js/pgwslideshow.min.js"></script>
+</head>
+<body>
+    <div class="panel panel-default"  >
+        <!--<div class="panel-heading">
+            <h3 class="panel-title">
+                图片<span style="float: right;cursor:pointer" title="关闭" class="proimgclose">X</span>
+            </h3>
+        </div>-->
+        <div class="panel-body">
+            <ul class="pgwSlideshow" id="imgs">
+                <!--<li>
+                    <img src="../images/analytics.png" alt="没有图片" data-description="图便宜" />
+                </li>
+                <li>
+                    <img src="../images/analytics.png" alt="没有图片1" data-description="图便宜1" />
+                </li>
+                <li>
+                    <img src="../images/analytics.png" alt="没有图片2" data-description="图便宜2" />
+                </li>-->
+            </ul>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var apiurl = "http://localhost:8808/project_gis/";
+        $(document).ready(function () {
+            var id = getQueryString("id");
+            
+            $.ajax({
+                type: "GET",
+                url: apiurl + "getproject",
+                data: {
+                    pId: id
+                },
+                dataType: "json",
+                async: false,
+                success: function (json) {
+                    if (json.code = 1000) {
+                        if (json.data != null && json.data.project != null) {
+                            var pro = json.data.project;
+                            var img = pro.cameras;
+                            var imgstr = "";
+                            for (var i = 0; i < img.length; i++) {
+                                imgstr += "<li><img src='" + img[i].url + "'  alt='" + pro.name + "'  data-description='" + img[i].content + "' /></li>";
+                            }
+                            $("#imgs").html(imgstr);
+                        } else {
+                            alert("获取信息失败");
+                        }
+                    } else if (json.code = 1001) {
+                        alert("获取信息失败");
+                    } else if (json.code = 1002) {
+                        alert("接口异常");
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                }
+            });
+            
+            $('.pgwSlideshow').pgwSlideshow({
+                transitionEffect: 'fading',
+                autoSlide: true
+            });
+        });
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(r[2]);
+            return "";
+        }
+    </script>
+</body>
+</html>
